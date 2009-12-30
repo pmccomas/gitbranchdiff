@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Heatmap</title>
+<link rel="stylesheet" type="text/css" href="/static/main.css" />
+</head>
+<body><div id="main">
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load('visualization', '1', {packages: ['table']});
+var json_table;
+var json_view;
+var options = {'showRowNumber': false, 'allowHtml':true};
+
+function doResize()
+{
+	json_table.draw(json_view, options);
+}
+
+function drawVisualization()
+{
+	numDirectories = {{ numDirectories }}
+	json_table = new google.visualization.Table(document.getElementById('table_div_json'));
+	var json_data = new google.visualization.DataTable( {{ json|safe}} );
+
+	var colourFormatter = new google.visualization.ColorFormat();
+	colourFormatter.addRange(0, 50, 'black', 'lightgreen');
+	colourFormatter.addGradientRange(50, 400, 'black', 'lightgreen', 'DarkOrange');
+	colourFormatter.addRange(400, null, 'black', 'DarkOrange');
+	
+	var urlFormatter = new google.visualization.PatternFormat('<a class=\'list\' href="{1}">{0}</a>');
+	var viewColumns = [0];
+	for( i=1; i<=numDirectories; i++ )
+	{
+		colourFormatter.format(json_data, i);
+		urlFormatter.format(json_data, [i, i+numDirectories]);
+		viewColumns[i] = i;
+	}
+
+	var totalColourFormatter = new google.visualization.ColorFormat();
+	totalColourFormatter.addRange(0, 500, 'black', 'lightgreen');
+	totalColourFormatter.addGradientRange(500, 2000, 'black', 'lightgreen', 'DarkOrange');
+	totalColourFormatter.addRange(2000, null, 'black', 'DarkOrange');
+	totalColourFormatter.format(json_data, i+numDirectories);
+	viewColumns[i] = i+numDirectories; // Total column
+	
+	// only draw the first numDirectories columns
+	json_view = new google.visualization.DataView(json_data);
+	json_view.setColumns(viewColumns);
+
+	json_table.draw(json_view, options);
+}
+
+google.setOnLoadCallback(drawVisualization);
+window.onresize = doResize;
+</script>
+
+<h1 id="header">Basekit Animation Heatmap</h1>
+<h2 id="header">{{ baseBranch }} Lines of Difference</h2>
+
+<div id="table_div_json"></div>
+</br>
+
+</div>
+</body>
+</html>

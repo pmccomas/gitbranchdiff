@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>{{ compareBranch }} Differences</title>
+<link rel="stylesheet" type="text/css" href="/static/main.css" />
+</head>
+<body><div id="main">
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load('visualization', '1', {packages: ['annotatedtimeline']});
+var options = {'showRowNumber': false, 'allowHtml':true, 'displayAnnotations':false, 'displayAnnotationsFilter':false};
+var json_timeline;
+var json_data;
+
+function displayAnnotations()
+{
+	options.displayAnnotations = document.annotations.annotations.checked;
+	json_timeline.draw(json_data, options);
+}
+
+function doResize()
+{
+	json_timeline.draw(json_data, options);
+}
+
+function drawVisualization()
+{
+	json_data = new google.visualization.DataTable( {{ json|safe}} );
+
+	json_timeline = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline'));
+	json_timeline.draw(json_data, options);
+}
+
+google.setOnLoadCallback(drawVisualization);
+window.onresize = doResize;
+
+</script>
+
+<h2 id="header">{{ compareBranch }}:{{ directory }} Differences (compared with {{ baseBranch }})</h2>
+</br>
+
+<div id="commitinfo">{{ commitInfo|linebreaks }}</div>
+
+<table class="file_diffs">
+<thead>
+	<tr>
+	<th>File</td>
+	<th>Insertions</td>
+	<th>Deletions</td>
+	<th>Total</td>
+	</tr>
+</thead>
+<tbody>
+{% for file in fileList %}
+	<tr>
+	<td><a class="list" href="http://eac-git.eac.ad.ea.com/?p=basekit-animation.git;a=blobdiff;f={{ file.file }};hb={{ baseCommit }};hpb={{ compareCommit }}">{{ file.file }}</a></td>
+	<td class="number">{{ file.insertions }}</td>
+	<td class="number">{{ file.deletions }}</td>
+	<td class="number">{{ file.total }}</td>
+	</tr>
+{% endfor %}
+</tbody>
+<tfoot>
+	<tr>
+	<td class="number"></td>
+	<td class="number">{{ insertions }}</td>
+	<td class="number">{{ deletions }}</td>
+	<td class="number">{{ total }}</td>
+	</tr>
+</tfoot>
+</table>
+<div id="timeline" style="height: 400px; margin-top: 6px"></div>
+<form name="annotations" style="margin-top: 6px">
+Display Annotations: <input type="checkbox" name="annotations" onClick="displayAnnotations()"/>
+</form>
+</div>
+</body>
+</html>

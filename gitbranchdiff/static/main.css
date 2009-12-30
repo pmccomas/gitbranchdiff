@@ -1,0 +1,100 @@
+body {
+	margin: 5px 5px;
+	padding: 0 5px;
+	font-family: Arial, sans-serif;
+	font-size: 87%;
+	margin: 10px;
+}
+
+a {
+	color: #0000cc;
+}
+
+a:hover, a:visited, a:active {
+	color: #880000;
+}
+
+#header {
+  padding: 8px;
+  background:#e5ecf9;
+}
+#main {
+  float: left;
+  width: 90%;
+  padding-left: 5px;
+}
+#nav {
+  text-align: right;
+  margin: 0 0 5px;
+}
+#nav a {
+  margin: 0 7px 0 0;
+}
+h1,
+#scopes h4,
+#tokens h4 {
+  margin-top: 2;
+}
+#header,
+#scopes,
+#tokens {
+  -moz-border-radius: 5px;
+}
+
+label.create {
+  display: inline-block;
+  text-align:right;
+  width: 40%;
+  margin-right: 5px;
+}
+
+table.file_diffs {
+	font-family:monospace;
+}
+
+table {
+	border-spacing:0;
+	border: 1px solid #D9D8D1;
+	padding:8px 4px;
+	border-collapse:collapse;
+}
+
+th{
+	background-color:#E5ECF9;
+	border:1px solid #3366CC;
+	font-weight:bold;
+	padding:6px 12px;
+	text-align:left;
+	font-family:sans-serif;
+	font-size:70%;	
+}
+
+tfoot {
+	border: 1px solid #D9D8D1;
+}
+
+table.file_diffs td {
+	padding-right: 4px;
+}
+
+td.number {
+	font-family:sans-serif;
+	font-size:70%;
+	text-align:right;
+}
+
+#commitinfo {
+	border: 1px solid #D9D8D1;
+	margin: 6px 0px;
+}
+
+a.list {
+	color:#000000;
+	text-decoration:none;
+}
+
+a.list:hover {
+	color:#3366CC;
+	text-decoration:underline;
+}
+
