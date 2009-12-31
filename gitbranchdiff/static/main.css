@@ -2,7 +2,7 @@ body {
 	margin: 5px 5px;
 	padding: 0 5px;
 	font-family: Arial, sans-serif;
-	font-size: 87%;
+	font-size: 70%;
 	margin: 10px;
 }
 
@@ -15,8 +15,8 @@ a:hover, a:visited, a:active {
 }
 
 #header {
-  padding: 8px;
-  background:#e5ecf9;
+	padding: 8px;
+	background:#e5ecf9;
 }
 #main {
   float: left;
@@ -49,7 +49,7 @@ label.create {
 }
 
 table.file_diffs {
-	font-family:monospace;
+	font-family:Monaco,"Lucida Console","Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
 }
 
 table {
@@ -57,6 +57,7 @@ table {
 	border: 1px solid #D9D8D1;
 	padding:8px 4px;
 	border-collapse:collapse;
+	background:#EAF2F5 url(/static/bg_gradient.gif) repeat-x scroll 0 100%;
 }
 
 th{
@@ -66,11 +67,28 @@ th{
 	padding:6px 12px;
 	text-align:left;
 	font-family:sans-serif;
-	font-size:70%;	
 }
 
 tfoot {
 	border: 1px solid #D9D8D1;
+}
+
+.matrix_background
+{
+	background:#e7e9f9;
+}
+
+.matrix_fontsize
+{
+	font-size: 8.4pt;
+}
+
+.matrix_header
+{
+	text-align:center;	
+	background:#FFFFFF url(http://www.google.com/uds/modules/gviz/1.0/table/title-bg.gif) repeat-x scroll left bottom;
+	font-family:sans-serif;
+	font-weight:bold;	
 }
 
 table.file_diffs td {
@@ -79,13 +97,36 @@ table.file_diffs td {
 
 td.number {
 	font-family:sans-serif;
-	font-size:70%;
 	text-align:right;
 }
 
 #commitinfo {
-	border: 1px solid #D9D8D1;
-	margin: 6px 0px;
+	margin: 6px 0px;	
+	padding:0 0.7em 0.7em;
+	background:#EAF2F5 url(/static/bg_gradient.gif) repeat-x scroll 0 100%;
+	border:1px solid #BEDCE7;
+	font-family:Monaco,"Lucida Console","Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
+	color: #808080;
+}
+
+#branchselect
+{
+	margin-top: 6px;
+	width: 250px;
+	padding:0.5em;
+	background:#EAF2F5 url(/static/bg_gradient.gif) repeat-x scroll 0 100%;
+	border:1px solid #BEDCE7;
+	color: #808080;
+}
+
+select
+{
+	font-size: 8.4pt
+}
+
+input
+{
+	font-size: 8.4pt
 }
 
 a.list {

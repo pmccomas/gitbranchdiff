@@ -11,7 +11,11 @@
 google.load('visualization', '1', {packages: ['table']});
 var json_table;
 var json_view;
-var options = {'showRowNumber': false, 'allowHtml':true};
+var cssClassNames = {'tableRow': "matrix_fontsize", 
+'selectedTableRow': 'matrix_fontsize', 
+'hoverTableRow': "matrix_fontsize matrix_background", 
+'headerRow': 'matrix_fontsize matrix_header'};
+var options = {'showRowNumber': false, 'alternatingRowStyle':false, 'allowHtml':true, 'cssClassNames':cssClassNames};
 
 function doResize()
 {
@@ -60,7 +64,25 @@ window.onresize = doResize;
 <h2 id="header">{{ baseBranch }} Lines of Difference</h2>
 
 <div id="table_div_json"></div>
-</br>
+
+<div id="branchselect">
+<form name="branchselect" action="{% url matrix %}">
+Base Branch:
+<select name="bb">
+	{% for branch in branches %}
+	<option value='{{ branch }}'
+	{% ifequal branch baseBranch %}
+selected="selected">
+	{% else %}
+>
+	{% endifequal %}
+	{{ branch }}
+	</option>
+	{% endfor %}
+</select>
+<input type="submit" value="Submit" />
+</form>
+</div>
 
 </div>
 </body>

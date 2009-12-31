@@ -8,5 +8,6 @@ from views import *
 urlpatterns = patterns('',
     # Example:
 	(r'^$', matrix),
-	(r'^diff/$', diff),
+	url(r'^matrix/$', matrix, name='matrix'),
+	url(r'^diff/$', diff, name='diff'),
 )

@@ -12,7 +12,7 @@ GIT_REPO_DIR = "D:\\code\\basekit-animation"
 GIT_USE_REMOTE_BRANCH = True
 GIT_DIFF_OPTIONS = "-M -C --ignore-space-at-eol"
 GIT_DIFF_CACHE_DIR = "D:\\temp\\gitbranchdiff"
-baseBranch = "basekit/ml"
+GIT_DEFAULT_BASEBRANCH = "basekit/ml"
 
 GIT_BRANCHES = [ 
 	"ant15/dl",
@@ -223,6 +223,9 @@ def createDiffURL(baseCommit, compareCommit, directory):
 	
 # ------------------- Program ----------------------------------------------------------------------------------
 def matrix(request):	
+	baseBranch = request.GET.get('bb')
+	baseBranch = GIT_DEFAULT_BASEBRANCH if not baseBranch else baseBranch
+
     # Creating the data
 	urlcolumns = []
 	description = {"branch": ("string", "Branch"), "total": ("number", "Total") }
@@ -256,6 +259,7 @@ def matrix(request):
 	
 	rendered = render_to_string('index.html', { 'json': json,
 												'numDirectories': len(GIT_DIRECTORIES),
+												'branches': GIT_BRANCHES,
 												'baseBranch': baseBranch })
 	
 	return HttpResponse( rendered )
