@@ -17,6 +17,7 @@ a:hover, a:visited, a:active {
 #header {
 	padding: 8px;
 	background:#e5ecf9;
+	color:#000000;
 }
 #main {
   float: left;

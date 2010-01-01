@@ -7,7 +7,7 @@ from views import *
 
 urlpatterns = patterns('',
     # Example:
-	(r'^$', matrix),
+	url(r'^$', matrix, name='home'),
 	url(r'^matrix/$', matrix, name='matrix'),
 	url(r'^diff/$', diff, name='diff'),
 )

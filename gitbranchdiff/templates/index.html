@@ -8,25 +8,30 @@
 <body><div id="main">
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
-google.load('visualization', '1', {packages: ['table']});
+google.load('visualization', '1', {packages: ['table', 'annotatedtimeline']});
 var json_table;
-var json_view;
+var json_tableView;
 var cssClassNames = {'tableRow': "matrix_fontsize", 
 'selectedTableRow': 'matrix_fontsize', 
 'hoverTableRow': "matrix_fontsize matrix_background", 
 'headerRow': 'matrix_fontsize matrix_header'};
-var options = {'showRowNumber': false, 'alternatingRowStyle':false, 'allowHtml':true, 'cssClassNames':cssClassNames};
+var tableOptions = {'showRowNumber': false, 'alternatingRowStyle':false, 'allowHtml':true, 'cssClassNames':cssClassNames};
+var timelineOptions = {'allowHtml':true};
+var json_timeline;
+var json_timelineData;
+
 
 function doResize()
 {
-	json_table.draw(json_view, options);
+	json_table.draw(json_tableView, tableOptions);
+	json_timeline.draw(json_timelineData, timelineOptions);
 }
 
-function drawVisualization()
+function drawTableVisualization()
 {
 	numDirectories = {{ numDirectories }}
 	json_table = new google.visualization.Table(document.getElementById('table_div_json'));
-	var json_data = new google.visualization.DataTable( {{ json|safe}} );
+	var json_data = new google.visualization.DataTable( {{ json_table|safe}} );
 
 	var colourFormatter = new google.visualization.ColorFormat();
 	colourFormatter.addRange(0, 50, 'black', 'lightgreen');
@@ -50,17 +55,31 @@ function drawVisualization()
 	viewColumns[i] = i+numDirectories; // Total column
 	
 	// only draw the first numDirectories columns
-	json_view = new google.visualization.DataView(json_data);
-	json_view.setColumns(viewColumns);
+	json_tableView = new google.visualization.DataView(json_data);
+	json_tableView.setColumns(viewColumns);
 
-	json_table.draw(json_view, options);
+	json_table.draw(json_tableView, tableOptions);
+}
+
+function drawTimelineVisualization()
+{
+	json_timelineData = new google.visualization.DataTable( {{ json_timeline|safe}} );
+
+	json_timeline = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline'));
+	json_timeline.draw(json_timelineData, timelineOptions);
+}
+
+function drawVisualization()
+{
+	drawTableVisualization();
+	drawTimelineVisualization();
 }
 
 google.setOnLoadCallback(drawVisualization);
 window.onresize = doResize;
 </script>
 
-<h1 id="header">Basekit Animation Heatmap</h1>
+<a href="{% url home %}"><h1 id="header" >Basekit Animation Heatmap</h1></a>
 <h2 id="header">{{ baseBranch }} Lines of Difference</h2>
 
 <div id="table_div_json"></div>
@@ -82,6 +101,12 @@ selected="selected">
 </select>
 <input type="submit" value="Submit" />
 </form>
+</div>
+
+<div id="timeline" style="height: 400px; margin-top: 6px">
+{% if not json_timeline %}
+Generating Timeline, please try again in a moment...
+{% endif %}
 </div>
 
 </div>
