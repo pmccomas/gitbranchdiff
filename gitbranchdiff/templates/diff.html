@@ -54,7 +54,7 @@ window.onresize = doResize;
 <tbody>
 {% for file in fileList %}
 	<tr>
-	<td><a class="list" href="http://eac-git.eac.ad.ea.com/?p=basekit-animation.git;a=blobdiff;f={{ file.file }};hb={{ baseCommit }};hpb={{ compareCommit }}">{{ file.file }}</a></td>
+	<td><a class="list" href="http://eac-git.eac.ad.ea.com/?p=basekit-animation.git;a=blobdiff;f={{ file.file }};hpb={{ baseCommit }};hb={{ compareCommit }}">{{ file.file }}</a></td>
 	<td class="number">{{ file.insertions }}</td>
 	<td class="number">{{ file.deletions }}</td>
 	<td class="number">{{ file.total }}</td>
