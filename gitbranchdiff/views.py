@@ -17,10 +17,12 @@ GIT_BRANCHES = [
 	"ant15/dl",
 	"ant15/rl/2009.08",
 	"basekit/ml",
-#	"bball12/ml",
+	"bball11/ant-gameplay",
+	"bball12/ml",
 	"fifa/ml", 
 	"nhl",
-#	"ssx",
+	"active",
+	"ssx",
 ]
 
 GIT_DIRECTORIES = [
