@@ -1,5 +1,4 @@
 from django.conf.urls.defaults import *
-from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -14,13 +13,6 @@ urlpatterns = patterns('',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    #(r'^admin/', include(admin.site.urls)),
-	
-	('^gitbranchdiff/', include('BasekitHeatmap.gitbranchdiff.urls')),	
+    # (r'^admin/', include(admin.site.urls)),
+    (r'^test/', include('mysite.gitbranchdiff.urls')),
 )
-
-if settings.DEBUG:
-    urlpatterns += patterns('',
-        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'D:/code/BasekitHeatmap/gitbranchdiff/static'}),
-    )
-

@@ -1,4 +1,4 @@
-# Django settings for BasekitHeatmap project.
+# Django settings for mysite project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -48,7 +48,7 @@ MEDIA_URL = ''
 ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '6_)ov&c&6a*&j*#wn!qp+jfkovmn+h9$ikw1r3(36iy6hgiuc6'
+SECRET_KEY = 'un3gj7$3rkpc2l207s#gdst)_v6%1k0(b*y2zctwz2dxqdf9cv'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -63,7 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
-ROOT_URLCONF = 'BasekitHeatmap.urls'
+ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -76,5 +76,5 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-	'BasekitHeatmap.gitbranchdiff'
+    'mysite.gitbranchdiff',
 )

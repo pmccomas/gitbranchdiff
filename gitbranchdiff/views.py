@@ -7,10 +7,10 @@ from django.conf import settings
 from django.template import Context, loader
 from django.template.loader import render_to_string
 
-GIT_REPO_DIR = "D:\\code\\basekit-animation"
-GIT_USE_REMOTE_BRANCH = True
+GIT_REPO_DIR = "/export/home/git/basekit-animation.git"
+GIT_USE_REMOTE_BRANCH = False
 GIT_DIFF_OPTIONS = "-M -C --ignore-space-at-eol"
-GIT_DIFF_CACHE_DIR = "D:\\temp\\gitbranchdiff"
+GIT_DIFF_CACHE_DIR = "/var/tmp/django/gitbranchdiff"
 GIT_DEFAULT_BASEBRANCH = "basekit/ml"
 
 GIT_BRANCHES = [ 
@@ -100,7 +100,7 @@ def git_getBranch(commit):
 
 def getBranchFilesDifference(branch0Commit, branch1Commit, directory):
 	# get file differences
-	output = git_cmdMultiline("diff %s --numstat %s %s %s" % (GIT_DIFF_OPTIONS, branch0Commit, branch1Commit, directory));
+	output = git_cmdMultiline("diff %s --numstat %s %s -- %s" % (GIT_DIFF_OPTIONS, branch0Commit, branch1Commit, directory));
 	fileList=[]
 	totalInsertions = 0
 	totalDeletions = 0
@@ -125,7 +125,7 @@ def getBranchCommitLinesDifference(commit0, commit1, directory):
 
 	if not diff:
 		# get lines of difference
-		output = git_cmd("diff %s --shortstat %s %s %s" % (GIT_DIFF_OPTIONS, commit0, commit1, directory));
+		output = git_cmd("diff %s --shortstat %s %s -- %s" % (GIT_DIFF_OPTIONS, commit0, commit1, directory));
 
 		# parse output
 		match = re.match(".*?(\d+) files changed.*?(\d+) insertions.*?(\d+) deletions", output);
@@ -224,6 +224,7 @@ def createMatrixTimelineJSon(baseBranch):
 	history.join(5)
 	if history.isAlive():
 		return None
+	# return None  
 		
 	print "successfully got timeline history"
 	branchDiffHistory = history.branchDiffHistory		
