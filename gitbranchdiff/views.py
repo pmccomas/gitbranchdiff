@@ -1,17 +1,23 @@
 import os, sys, re, threading, time
-import datetime, hashlib
+import datetime, hashlib, platform
 import gviz_api
 
 from django.http import HttpResponse
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.template import Context, loader
 from django.template.loader import render_to_string
 
 GIT_REPO_DIR = "/export/home/git/basekit-animation.git"
 GIT_USE_REMOTE_BRANCH = False
-GIT_DIFF_OPTIONS = "-M -C --ignore-space-at-eol"
 GIT_DIFF_CACHE_DIR = "/var/tmp/django/gitbranchdiff"
+GIT_DIFF_OPTIONS = "-M -C --ignore-space-at-eol"
 GIT_DEFAULT_BASEBRANCH = "basekit/ml"
+
+if platform.system() is "Windows":
+	GIT_REPO_DIR = "D:\\code\\basekit-animation"
+	GIT_USE_REMOTE_BRANCH = True
+	GIT_DIFF_CACHE_DIR = "D:\\temp\\gitbranchdiff"
 
 GIT_BRANCHES = [ 
 	"ant15/dl",
@@ -193,7 +199,8 @@ def getBranchDiffHistory( baseCommit, compareCommit ):
 	return branchDiffList
 	
 def createDiffURL(baseCommit, compareCommit, directory):
-	return "?bc=%s&cc=%s&dir=%s" % (baseCommit, compareCommit, directory)
+	url = reverse('diff') + "?bc=%s&cc=%s&dir=%s" % (baseCommit, compareCommit, directory)
+	return url
 	
 class BranchHistory( threading.Thread ):
 	def __init__ ( self, baseCommit ):
@@ -219,12 +226,14 @@ def createMatrixTimelineJSon(baseBranch):
 	dataTableTimeline = gviz_api.DataTable( descriptionTimeline )
 
 	# get the history for the branches
-	history = BranchHistory( baseCommit )
-	history.start()
-	history.join(5)
-	if history.isAlive():
-		return None
-	# return None  
+	if 1:
+		history = BranchHistory( baseCommit )
+		history.start()
+		history.join(5)
+		if history.isAlive():
+			return None
+	else:
+		return None  
 		
 	print "successfully got timeline history"
 	branchDiffHistory = history.branchDiffHistory		
@@ -369,7 +378,7 @@ def matrix(request):
 			directory = GIT_DIRECTORIES[x]
 			branchDiff = getBranchCommitLinesDifference( baseCommit, compareCommit, directory )
 			row[directory] = branchDiff['total']			
-			row["url" + str(x)] = "diff/" + createDiffURL(branchDiff['baseCommit'], branchDiff['compareCommit'], branchDiff['directory'])
+			row["url" + str(x)] = createDiffURL(branchDiff['baseCommit'], branchDiff['compareCommit'], branchDiff['directory'])
 			total += branchDiff['total']
 		row["total"] = total
 		data.append(row)
